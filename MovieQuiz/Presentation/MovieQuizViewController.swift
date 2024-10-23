@@ -85,18 +85,18 @@ final class MovieQuizViewController: UIViewController {
         }
     }
     
-    @IBAction private func yesButtonTapped() {
+    private func checkAnswer(isYes: Bool) {
         let currentQuestion = questions[currentQuestionIndex]
-        let currentQuestionAnswer = currentQuestion.correctAnswer == true
-        
-        showAnswerResult(isCorrect: currentQuestionAnswer)
+        let isCorrect = currentQuestion.correctAnswer == isYes
+        showAnswerResult(isCorrect: isCorrect)
+    }
+    
+    @IBAction private func yesButtonTapped() {
+        checkAnswer(isYes: true)
     }
     
     @IBAction private func noButtonTapped() {
-        let currentQuestion = questions[currentQuestionIndex]
-        let currentQuestionAnswer = currentQuestion.correctAnswer == false
-        
-        showAnswerResult(isCorrect: currentQuestionAnswer)
+        checkAnswer(isYes: false)
     }
     
     private func showNextQuestionOrResults() {
