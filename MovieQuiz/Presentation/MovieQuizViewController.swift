@@ -41,6 +41,8 @@ final class MovieQuizViewController: UIViewController {
     @IBOutlet private var counterLabel: UILabel!
     @IBOutlet private var imageView: UIImageView!
     @IBOutlet private var questionLabel: UILabel!
+    @IBOutlet weak var yesButton: UIButton!
+    @IBOutlet weak var noButton: UIButton!
     
     // MARK: - Lifecycle
     override func viewDidLoad() {
@@ -86,6 +88,8 @@ final class MovieQuizViewController: UIViewController {
     }
     
     private func checkAnswer(isYes: Bool) {
+        yesButton.isEnabled = false
+        noButton.isEnabled = false
         let currentQuestion = questions[currentQuestionIndex]
         let isCorrect = currentQuestion.correctAnswer == isYes
         showAnswerResult(isCorrect: isCorrect)
@@ -100,6 +104,8 @@ final class MovieQuizViewController: UIViewController {
     }
     
     private func showNextQuestionOrResults() {
+        yesButton.isEnabled = true
+        noButton.isEnabled = true
         if currentQuestionIndex == questions.count - 1 {
             show(quiz: QuizResultsViewModel(title: "Этот раунд окончен!", text: "Ваш результат: \(correctAnswers)/10", buttonText: "Сыграть еще раз"))
         } else {
