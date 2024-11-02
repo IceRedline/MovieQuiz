@@ -7,7 +7,14 @@
 
 import Foundation
 
-class QuestionFactory {
+class QuestionFactory: QuestionFactoryProtocol {
+    
+    weak var delegate: QuestionFactoryDelegate?
+    
+    func setup(delegate: QuestionFactoryDelegate) {
+            self.delegate = delegate
+        }
+    
     private let questions: [QuizQuestion] = [QuizQuestion(image: "The Godfather", text: "Рейтинг этого фильма больше чем 6?", correctAnswer: true),
                                              QuizQuestion(image: "The Dark Knight", text: "Рейтинг этого фильма больше чем 6?", correctAnswer: true),
                                              QuizQuestion(image: "Kill Bill", text: "Рейтинг этого фильма больше чем 6?", correctAnswer: true),
@@ -19,10 +26,13 @@ class QuestionFactory {
                                              QuizQuestion(image: "Tesla", text: "Рейтинг этого фильма больше чем 6?", correctAnswer: false),
                                              QuizQuestion(image: "Vivarium", text: "Рейтинг этого фильма больше чем 6?", correctAnswer: false)]
     
-    func requestNextQuestion() -> QuizQuestion? { // выбираем индекс вопроса из массива questions, который мы хотим вернуть
+    func requestNextQuestion() {
         guard let index = (0..<questions.count).randomElement() else {
-            return nil
+            delegate?.didReceiveNextQuestion(question: nil)
+            return
         }
-        return questions[safe: index] // расширение из файла Array+Extensions
+
+        let question = questions[safe: index]
+        delegate?.didReceiveNextQuestion(question: question) // вызываем метод делегата и передаёте модель вопроса в него. 
     }
 }
