@@ -7,7 +7,13 @@
 
 import Foundation
 
-final class StatisticsService: StatisticServiceProtocol {
+final class StatisticsServiceImplementation: StatisticService {
+    
+    private enum Keys: String {
+        case correct
+        case bestGame
+        case gamesCount
+    }
     
     private let storage: UserDefaults = .standard
     private var correctAnswers: Int {
@@ -17,12 +23,6 @@ final class StatisticsService: StatisticServiceProtocol {
         set {
             storage.set(newValue, forKey: "totalCorrectAnswers")
         }
-    }
-    
-    private enum Keys: String {
-        case correct
-        case bestGame
-        case gamesCount
     }
     
     // благодаря геттеру и сеттеру при каждом изменении значения UserDefaults будут обновляться автоматически
