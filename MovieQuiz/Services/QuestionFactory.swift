@@ -33,8 +33,8 @@ final class QuestionFactory: QuestionFactoryProtocol {
             delegate?.didReceiveNextQuestion(question: nil)
             return
         }
-
+        
         let question = questions[safe: index]
-        delegate?.didReceiveNextQuestion(question: question) // вызываем метод делегата и передаёте модель вопроса в него. 
+        delegate?.didReceiveNextQuestion(question: question) // вызываем метод делегата и передаёте модель вопроса в него.
     }
 }

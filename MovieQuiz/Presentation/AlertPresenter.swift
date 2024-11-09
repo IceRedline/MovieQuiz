@@ -10,12 +10,22 @@ import UIKit
 final class AlertPresenter {
     
     weak var viewController: UIViewController?
-    func show(quiz result: QuizResultsViewModel, model: AlertModel, on vc: UIViewController) {
-        let alert = UIAlertController(title: result.title, message: result.text, preferredStyle: .alert)
-        let action = UIAlertAction(title: "Сыграть еще раз", style: .default) { _ in
-            model.completion()
-        }
+    
+    func show(with model: AlertModel) {
+        let alert = UIAlertController(
+            title: model.title,
+            message: model.message,
+            preferredStyle: .alert
+        )
+        
+        let action = UIAlertAction(
+            title: model.buttonText,
+            style: .default,
+            handler: { _ in
+                model.completion()
+            }
+        )
         alert.addAction(action)
-        vc.present(alert, animated: true)
+        viewController?.present(alert, animated: true)
     }
 }

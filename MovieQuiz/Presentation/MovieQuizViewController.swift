@@ -7,7 +7,7 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate {
     private let questionsAmount: Int = 10
     private var currentQuestion: QuizQuestion?
     private var questionFactory: QuestionFactoryProtocol = QuestionFactory()
-    private let alertPresenter = AlertPresenter()
+    private var alertPresenter: AlertPresenter?
     private var statisticService: StatisticService?
     
     @IBOutlet private var counterLabel: UILabel!
@@ -23,6 +23,10 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate {
         let questionFactory = QuestionFactory()
         questionFactory.setup(delegate: self)
         self.questionFactory = questionFactory
+        
+        let alertPresenter = AlertPresenter()
+        alertPresenter.viewController = self
+        self.alertPresenter = alertPresenter
         
         questionFactory.requestNextQuestion()
         statisticService = StatisticsServiceImplementation()
@@ -124,10 +128,10 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate {
                 self.correctAnswers = 0
                 self.imageView.layer.borderWidth = 0
                 
-                questionFactory.requestNextQuestion()
+                self.questionFactory.requestNextQuestion()
             }
         )
-        alertPresenter.show(quiz: result, model: alertModel, on: self) // выводим алерт
+        alertPresenter?.show(with: alertModel) // выводим алерт
     }
 }
 
