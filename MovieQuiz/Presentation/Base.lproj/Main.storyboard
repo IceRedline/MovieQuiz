@@ -53,7 +53,7 @@
                                             </userDefinedRuntimeAttribute>
                                         </userDefinedRuntimeAttributes>
                                     </imageView>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Рейтинг этого фильма меньше, чем 5?" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bXm-rU-jft" userLabel="Question Label">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Рейтинг этого фильма больше, чем 7?" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bXm-rU-jft" userLabel="Question Label">
                                         <rect key="frame" x="0.0" y="624.5" width="374" height="99.5"/>
                                         <fontDescription key="fontDescription" name="YSDisplay-Bold" family="YS Display" pointSize="23"/>
                                         <color key="textColor" name="YP White"/>
@@ -79,7 +79,7 @@
                                                     <action selector="noButtonTapped" destination="BYZ-38-t0r" eventType="touchUpInside" id="Q2a-O5-JFb"/>
                                                 </connections>
                                             </button>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4Gm-4j-PQ4">
+                                            <button opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4Gm-4j-PQ4">
                                                 <rect key="frame" x="197" y="0.0" width="177" height="60"/>
                                                 <color key="backgroundColor" name="YP White"/>
                                                 <color key="tintColor" name="YP Black"/>
@@ -103,12 +103,17 @@
                                     </stackView>
                                 </subviews>
                             </stackView>
+                            <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="medium" translatesAutoresizingMaskIntoConstraints="NO" id="Qnj-4M-NCM">
+                                <rect key="frame" x="197" y="438" width="20" height="20"/>
+                            </activityIndicatorView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" name="YP Black"/>
                         <constraints>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="aKT-TW-AuS" secondAttribute="bottom" id="CsW-MD-UnI"/>
+                            <constraint firstItem="Qnj-4M-NCM" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="Epe-4D-IRn"/>
                             <constraint firstItem="aKT-TW-AuS" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="10" id="I4H-5W-Z5z"/>
+                            <constraint firstItem="Qnj-4M-NCM" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="XI2-SG-s5R"/>
                             <constraint firstItem="aKT-TW-AuS" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="20" id="fvv-cQ-ng6"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="aKT-TW-AuS" secondAttribute="trailing" constant="20" id="zvm-UK-0We"/>
                         </constraints>
@@ -116,6 +121,7 @@
                     <connections>
                         <outlet property="counterLabel" destination="2rX-3p-WAc" id="BK4-OE-yKa"/>
                         <outlet property="imageView" destination="nLl-ds-h5e" id="Vbk-0c-qYR"/>
+                        <outlet property="loadingIndicator" destination="Qnj-4M-NCM" id="JOZ-YL-qq6"/>
                         <outlet property="noButton" destination="wqf-Sb-hMw" id="16W-YF-xWn"/>
                         <outlet property="questionLabel" destination="bXm-rU-jft" id="MOH-TI-IyM"/>
                         <outlet property="yesButton" destination="4Gm-4j-PQ4" id="IAN-G5-Am0"/>
