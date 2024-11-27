@@ -15,7 +15,7 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate {
     @IBOutlet private var questionLabel: UILabel!
     @IBOutlet private weak var yesButton: UIButton!
     @IBOutlet private weak var noButton: UIButton!
-    @IBOutlet private var activityIndicator: UIActivityIndicatorView!
+    @IBOutlet private var loadingIndicator: UIActivityIndicatorView!
     
     // MARK: - Lifecycle
     override func viewDidLoad() {
@@ -31,7 +31,7 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate {
         
         statisticService = StatisticsServiceImplementation()
         
-        showLoadingIndicator()
+        loadingIndicator.startAnimating()
         questionFactory.loadData()
     }
     
@@ -46,13 +46,8 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate {
         showNetworkError(message: error.localizedDescription)
     }
     
-    private func showLoadingIndicator() {
-        activityIndicator.isHidden = false
-        activityIndicator.startAnimating()
-    }
-    
     private func showNetworkError(message: String) {
-        activityIndicator.isHidden = true
+        loadingIndicator.stopAnimating()
         
         let alert = AlertModel(title: "Ошибка",
                                message: message,
@@ -62,13 +57,14 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate {
             self.currentQuestionIndex = 0
             self.correctAnswers = 0
             
-            self.questionFactory.loadData() // изменено, чтобы кнопка "попробовать еще раз" работала
+            loadingIndicator.startAnimating()
+            self.questionFactory.loadData()
         }
         alertPresenter?.show(with: alert)
     }
     
     func didReceiveNextQuestion(question: QuizQuestion?) {
-        if !activityIndicator.isHidden { activityIndicator.isHidden = true }
+        loadingIndicator.stopAnimating()
         guard let question = question else {
             return
         }
@@ -136,8 +132,6 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate {
     
     // Проверить последний вопрос или нет
     private func showNextQuestionOrResults() {
-        //yesButton.isEnabled = true
-        //noButton.isEnabled = true
 
         if currentQuestionIndex == questionsAmount - 1 {
             statisticService?.store(correct: correctAnswers, total: questionsAmount)

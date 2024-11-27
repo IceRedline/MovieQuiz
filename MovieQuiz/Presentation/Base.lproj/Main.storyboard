@@ -103,7 +103,7 @@
                                     </stackView>
                                 </subviews>
                             </stackView>
-                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="medium" translatesAutoresizingMaskIntoConstraints="NO" id="Qnj-4M-NCM">
+                            <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="medium" translatesAutoresizingMaskIntoConstraints="NO" id="Qnj-4M-NCM">
                                 <rect key="frame" x="197" y="438" width="20" height="20"/>
                             </activityIndicatorView>
                         </subviews>
@@ -119,9 +119,9 @@
                         </constraints>
                     </view>
                     <connections>
-                        <outlet property="activityIndicator" destination="Qnj-4M-NCM" id="JOZ-YL-qq6"/>
                         <outlet property="counterLabel" destination="2rX-3p-WAc" id="BK4-OE-yKa"/>
                         <outlet property="imageView" destination="nLl-ds-h5e" id="Vbk-0c-qYR"/>
+                        <outlet property="loadingIndicator" destination="Qnj-4M-NCM" id="JOZ-YL-qq6"/>
                         <outlet property="noButton" destination="wqf-Sb-hMw" id="16W-YF-xWn"/>
                         <outlet property="questionLabel" destination="bXm-rU-jft" id="MOH-TI-IyM"/>
                         <outlet property="yesButton" destination="4Gm-4j-PQ4" id="IAN-G5-Am0"/>
