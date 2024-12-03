@@ -36,6 +36,7 @@
                                             </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="252" verticalHuggingPriority="251" text="1/10" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2rX-3p-WAc" userLabel="Index Label">
                                                 <rect key="frame" x="336.5" y="0.0" width="37.5" height="23.5"/>
+                                                <accessibility key="accessibilityConfiguration" identifier="Index"/>
                                                 <fontDescription key="fontDescription" name="YSDisplay-Bold" family="YS Display" pointSize="20"/>
                                                 <color key="textColor" name="YP White"/>
                                                 <nil key="highlightedColor"/>
@@ -44,6 +45,7 @@
                                     </stackView>
                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="nLl-ds-h5e" userLabel="Preview Image">
                                         <rect key="frame" x="0.0" y="43.5" width="374" height="561"/>
+                                        <accessibility key="accessibilityConfiguration" identifier="Poster"/>
                                         <constraints>
                                             <constraint firstAttribute="width" secondItem="nLl-ds-h5e" secondAttribute="height" multiplier="2:3" id="yUN-Bb-MEt"/>
                                         </constraints>
@@ -55,6 +57,7 @@
                                     </imageView>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Рейтинг этого фильма больше, чем 7?" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bXm-rU-jft" userLabel="Question Label">
                                         <rect key="frame" x="0.0" y="624.5" width="374" height="99.5"/>
+                                        <accessibility key="accessibilityConfiguration" identifier="Question"/>
                                         <fontDescription key="fontDescription" name="YSDisplay-Bold" family="YS Display" pointSize="23"/>
                                         <color key="textColor" name="YP White"/>
                                         <nil key="highlightedColor"/>
@@ -65,6 +68,7 @@
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wqf-Sb-hMw">
                                                 <rect key="frame" x="0.0" y="0.0" width="177" height="60"/>
                                                 <color key="backgroundColor" name="YP White"/>
+                                                <accessibility key="accessibilityConfiguration" identifier="No"/>
                                                 <color key="tintColor" name="YP Black"/>
                                                 <state key="normal" title="Button"/>
                                                 <buttonConfiguration key="configuration" style="plain" title="Нет">
@@ -82,6 +86,7 @@
                                             <button opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4Gm-4j-PQ4">
                                                 <rect key="frame" x="197" y="0.0" width="177" height="60"/>
                                                 <color key="backgroundColor" name="YP White"/>
+                                                <accessibility key="accessibilityConfiguration" identifier="Yes"/>
                                                 <color key="tintColor" name="YP Black"/>
                                                 <state key="normal" title="Button"/>
                                                 <buttonConfiguration key="configuration" style="plain" title="Да">
