@@ -1,12 +1,10 @@
 import UIKit
 
-final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate {
+final class MovieQuizViewController: UIViewController {
     
-    private var correctAnswers = 0
-    private var questionFactory: QuestionFactoryProtocol = QuestionFactory(moviesLoader: MoviesLoader(), delegate: nil)
     private var alertPresenter: AlertPresenter?
     private var statisticService: StatisticService?
-    private let presenter = MovieQuizPresenter()
+    private var presenter: MovieQuizPresenter!
     
     @IBOutlet private var counterLabel: UILabel!
     @IBOutlet private var imageView: UIImageView!
@@ -19,11 +17,7 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        presenter.viewController = self
-        
-        let questionFactory = QuestionFactory(moviesLoader: MoviesLoader(), delegate: presenter)
-        questionFactory.setup(delegate: presenter)
-        presenter.questionFactory = questionFactory
+        presenter = MovieQuizPresenter(viewController: self)
         
         let alertPresenter = AlertPresenter()
         alertPresenter.viewController = self
@@ -31,18 +25,19 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate {
         
         presenter.statisticService = StatisticsServiceImplementation()
         
+    }
+    
+    func showLoadingIndicator() {
         loadingIndicator.startAnimating()
-        questionFactory.loadData()
     }
     
-    // MARK: - QuestionFactoryDelegate
-    
-    internal func didLoadDataFromServer() {
-        questionFactory.requestNextQuestion()
+    func hideLoadingIndicator() {
+        loadingIndicator.stopAnimating()
     }
     
-    internal func didFailToLoadData(with error: any Error) {
-        showNetworkError(message: error.localizedDescription)
+    func disableButtons() {
+        yesButton.isEnabled = false
+        noButton.isEnabled = false
     }
     
     func showNetworkError(message: String) {
@@ -53,17 +48,11 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate {
                                buttonText: "Попробовать ещё раз") { [weak self] in
             guard let self else { return }
             
-            self.presenter.resetQuestionIndex()
-            self.correctAnswers = 0
+            self.presenter.restartGame()
             
-            loadingIndicator.startAnimating()
-            self.questionFactory.loadData()
+            presenter.questionFactory?.loadData()
         }
         alertPresenter?.show(with: alert)
-    }
-    
-    func didReceiveNextQuestion(question: QuizQuestion?) {
-        presenter.didReceiveNextQuestion(question: question)
     }
     
     // Вывести на экран вопрос (принимает вью модель вопроса и ничего не возвращает)
@@ -77,10 +66,7 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate {
         noButton.isEnabled = true
     }
     
-    func disableButtons() {
-        yesButton.isEnabled = false
-        noButton.isEnabled = false
-    }
+    
     
     @IBAction private func yesButtonTapped() {
         presenter.yesButtonTapped()
@@ -112,11 +98,8 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate {
             completion: { [weak self] in
                 guard let self = self else { return }
                 
-                self.presenter.resetQuestionIndex()
-                self.presenter.correctAnswers = 0
+                self.presenter.restartGame()
                 self.imageView.layer.borderWidth = 0
-                
-                self.presenter.questionFactory.requestNextQuestion()
             }
         )
         alertPresenter?.show(with: alertModel) // выводим алерт

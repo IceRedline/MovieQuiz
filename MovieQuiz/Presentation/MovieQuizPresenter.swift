@@ -13,14 +13,17 @@ final class MovieQuizPresenter: QuestionFactoryDelegate {
     let questionsAmount: Int = 10
     var correctAnswers = 0
     
-    weak var viewController: MovieQuizViewController?
+    private weak var viewController: MovieQuizViewController?
     var statisticService: StatisticService?
-    var questionFactory: QuestionFactoryProtocol = QuestionFactory(moviesLoader: MoviesLoader(), delegate: nil)
+    var questionFactory: QuestionFactoryProtocol?
     var currentQuestion: QuizQuestion?
     
-    
-    func resetQuestionIndex() {
-        currentQuestionIndex = 0
+    init(viewController: MovieQuizViewController) {
+        self.viewController = viewController
+        
+        questionFactory = QuestionFactory(moviesLoader: MoviesLoader(), delegate: self)
+        questionFactory?.loadData()
+        viewController.showLoadingIndicator()
     }
     
     func increaseQuestionIndex() {
@@ -28,7 +31,7 @@ final class MovieQuizPresenter: QuestionFactoryDelegate {
     }
     
     internal func didLoadDataFromServer() {
-        questionFactory.requestNextQuestion()
+        questionFactory?.requestNextQuestion()
     }
     
     internal func didFailToLoadData(with error: any Error) {
@@ -48,7 +51,7 @@ final class MovieQuizPresenter: QuestionFactoryDelegate {
     }
     
     func didReceiveNextQuestion(question: QuizQuestion?) {
-        viewController?.loadingIndicator.stopAnimating()
+        viewController?.hideLoadingIndicator()
         guard let question = question else {
             return
         }
@@ -87,7 +90,7 @@ final class MovieQuizPresenter: QuestionFactoryDelegate {
     func showNextQuestionOrResults() {
 
         if self.isLastQuestion() {
-            statisticService?.store(correct: correctAnswers, total: self.questionsAmount)
+            statisticService?.store(correct: correctAnswers, total: questionsAmount)
             let result = "Ваш результат: \(correctAnswers)/10"
             let quizes = "Количество сыгранных квизов: \(statisticService?.gamesCount ?? 0)"
             let record = "Рекорд: \(statisticService?.bestGame.correctAnswers ?? 0)/10 (\(statisticService?.bestGame.date.dateTimeString ?? "no date"))"
@@ -98,8 +101,15 @@ final class MovieQuizPresenter: QuestionFactoryDelegate {
             viewController?.showQuizResult(result: resultViewModel)
         } else {
             self.increaseQuestionIndex()
-            questionFactory.requestNextQuestion()
+            questionFactory?.requestNextQuestion()
         }
+    }
+    
+    func restartGame() {
+        currentQuestionIndex = 0
+        correctAnswers = 0
+        viewController?.showLoadingIndicator()
+        questionFactory?.requestNextQuestion()
     }
     
 }
