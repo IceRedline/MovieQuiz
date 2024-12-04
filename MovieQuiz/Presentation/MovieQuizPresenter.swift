@@ -14,12 +14,14 @@ final class MovieQuizPresenter: QuestionFactoryDelegate {
     var correctAnswers = 0
     
     private weak var viewController: MovieQuizViewController?
-    var statisticService: StatisticService?
+    private let statisticService: StatisticServiceProtocol!
     var questionFactory: QuestionFactoryProtocol?
     var currentQuestion: QuizQuestion?
     
     init(viewController: MovieQuizViewController) {
         self.viewController = viewController
+        
+        statisticService = StatisticsServiceImplementation()
         
         questionFactory = QuestionFactory(moviesLoader: MoviesLoader(), delegate: self)
         questionFactory?.loadData()
@@ -73,7 +75,7 @@ final class MovieQuizPresenter: QuestionFactoryDelegate {
             return
         }
         let isCorrect = currentQuestion.correctAnswer == isYes
-        viewController?.showAnswerResult(isCorrect: isCorrect)
+        proceedWithAnswer(isCorrect: isCorrect)
     }
     
     func yesButtonTapped() {
@@ -86,8 +88,18 @@ final class MovieQuizPresenter: QuestionFactoryDelegate {
         viewController?.disableButtons()
     }
     
+    private func proceedWithAnswer(isCorrect: Bool) {
+        viewController?.highlightImageBorder(isCorrect: isCorrect)
+        correctAnswers += isCorrect ? 1 : 0
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) { [weak self] in
+            guard let self = self else { return }
+            proceedToNextQuestionOrResults()
+        }
+    }
+    
     // Проверить последний вопрос или нет
-    func showNextQuestionOrResults() {
+    private func proceedToNextQuestionOrResults() {
 
         if self.isLastQuestion() {
             statisticService?.store(correct: correctAnswers, total: questionsAmount)
