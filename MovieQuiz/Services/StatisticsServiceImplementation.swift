@@ -7,7 +7,7 @@
 
 import Foundation
 
-final class StatisticsServiceImplementation: StatisticService {
+final class StatisticsServiceImplementation: StatisticServiceProtocol {
     
     private enum Keys: String {
         case correct
@@ -25,7 +25,7 @@ final class StatisticsServiceImplementation: StatisticService {
         }
     }
     
-    // благодаря геттеру и сеттеру при каждом изменении значения UserDefaults будут обновляться автоматически
+    
     var gamesCount: Int {
         get {
             storage.integer(forKey: Keys.gamesCount.rawValue)
