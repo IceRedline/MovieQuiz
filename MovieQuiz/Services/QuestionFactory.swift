@@ -24,7 +24,7 @@ final class QuestionFactory: QuestionFactoryProtocol {
     private var movies: [MostPopularMovie] = []
     
     func loadData() {
-        moviesLoader.loadMovies(){ [weak self] result in
+        moviesLoader.loadMovies() { [weak self] result in
             
             DispatchQueue.main.async {
                 guard let self = self else { return }
@@ -56,7 +56,8 @@ final class QuestionFactory: QuestionFactoryProtocol {
             
             let rating = Float(movie.rating) ?? 0
             
-            guard let numberToCompare = (7..<10).randomElement() else { return }
+            let ratingRange = Array(stride(from: 8.0, through: 9.2, by: 0.2))
+            guard let numberToCompare = ratingRange.randomElement() else { return }
             guard let actionToCompare = ["больше", "меньше"].randomElement() else { return }
             
             let text = "Рейтинг этого фильма \(actionToCompare) чем \(numberToCompare)?"

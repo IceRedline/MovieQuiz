@@ -10,13 +10,13 @@ import UIKit
 final class MovieQuizPresenter: QuestionFactoryDelegate {
     
     private var currentQuestionIndex: Int = 0
-    let questionsAmount: Int = 10
-    var correctAnswers = 0
+    private let questionsAmount: Int = 10
+    private var correctAnswers = 0
     
     private weak var viewController: MovieQuizViewControllerProtocol?
     private let statisticService: StatisticServiceProtocol!
-    var questionFactory: QuestionFactoryProtocol?
-    var currentQuestion: QuizQuestion?
+    private var questionFactory: QuestionFactoryProtocol?
+    private var currentQuestion: QuizQuestion?
     
     init(viewController: MovieQuizViewControllerProtocol) {
         self.viewController = viewController
@@ -28,7 +28,7 @@ final class MovieQuizPresenter: QuestionFactoryDelegate {
         viewController.showLoadingIndicator()
     }
     
-    func increaseQuestionIndex() {
+    private func increaseQuestionIndex() {
         currentQuestionIndex += 1
     }
     
@@ -37,14 +37,15 @@ final class MovieQuizPresenter: QuestionFactoryDelegate {
     }
     
     internal func didFailToLoadData(with error: any Error) {
+        viewController?.hideLoadingIndicator()
         viewController?.showNetworkError(message: error.localizedDescription)
     }
     
-    func isLastQuestion() -> Bool {
+    private func isLastQuestion() -> Bool {
         currentQuestionIndex == questionsAmount - 1
     }
     
-    // Конвертировать моковый вопрос и вернуть вью модель для экрана вопроса
+    
     func convert(model: QuizQuestion) -> QuizStepViewModel {
         
         return QuizStepViewModel(image: UIImage(data: model.image) ?? UIImage(),
@@ -98,10 +99,10 @@ final class MovieQuizPresenter: QuestionFactoryDelegate {
         }
     }
     
-    // Проверить последний вопрос или нет
+    
     private func proceedToNextQuestionOrResults() {
 
-        if self.isLastQuestion() {
+        if isLastQuestion() {
             statisticService?.store(correct: correctAnswers, total: questionsAmount)
             let result = "Ваш результат: \(correctAnswers)/10"
             let quizes = "Количество сыгранных квизов: \(statisticService?.gamesCount ?? 0)"
@@ -121,7 +122,7 @@ final class MovieQuizPresenter: QuestionFactoryDelegate {
         currentQuestionIndex = 0
         correctAnswers = 0
         viewController?.showLoadingIndicator()
-        questionFactory?.requestNextQuestion()
+        questionFactory?.loadData()
     }
     
 }

@@ -25,7 +25,7 @@ final class StatisticsServiceImplementation: StatisticServiceProtocol {
         }
     }
     
-    // благодаря геттеру и сеттеру при каждом изменении значения UserDefaults будут обновляться автоматически
+    
     var gamesCount: Int {
         get {
             storage.integer(forKey: Keys.gamesCount.rawValue)

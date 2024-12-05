@@ -8,7 +8,7 @@
 import Foundation
 
 protocol QuestionFactoryDelegate: AnyObject {
-    func didReceiveNextQuestion(question: QuizQuestion?) // этот метод должен быть у делегата фабрики
+    func didReceiveNextQuestion(question: QuizQuestion?)
     func didLoadDataFromServer()
     func didFailToLoadData(with error: Error)
 }

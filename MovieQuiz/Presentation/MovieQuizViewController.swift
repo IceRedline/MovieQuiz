@@ -23,6 +23,10 @@ final class MovieQuizViewController: UIViewController, MovieQuizViewControllerPr
         self.alertPresenter = alertPresenter
     }
     
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .lightContent
+    }
+    
     func showLoadingIndicator() {
         loadingIndicator.startAnimating()
     }
@@ -37,21 +41,19 @@ final class MovieQuizViewController: UIViewController, MovieQuizViewControllerPr
     }
     
     func showNetworkError(message: String) {
-        hideLoadingIndicator()
-        
+    
         let alert = AlertModel(title: "Ошибка",
                                message: message,
                                buttonText: "Попробовать ещё раз") { [weak self] in
             guard let self else { return }
             
             self.presenter.restartGame()
-            
-            presenter.questionFactory?.loadData() // оставлено тут, т.к. если перенести в restartGame, то при рестарте будут пролистываться 2 фильма
+        
         }
         alertPresenter?.show(with: alert)
     }
     
-    // Вывести на экран вопрос (принимает вью модель вопроса и ничего не возвращает)
+
     func show(quiz step: QuizStepViewModel) {
         counterLabel.text = step.questionNumber
         imageView.image = step.image
@@ -77,7 +79,7 @@ final class MovieQuizViewController: UIViewController, MovieQuizViewControllerPr
         imageView.layer.borderColor = isCorrect ? UIColor.ypGreen.cgColor : UIColor.ypRed.cgColor
     }
     
-    // Показать результат квиза
+
     func showQuizResult(result: QuizResultsViewModel) {
         let alertModel = AlertModel(
             title: result.title,
@@ -90,6 +92,6 @@ final class MovieQuizViewController: UIViewController, MovieQuizViewControllerPr
                 self.imageView.layer.borderWidth = 0
             }
         )
-        alertPresenter?.show(with: alertModel) // выводим алерт
+        alertPresenter?.show(with: alertModel)
     }
 }
