@@ -55,9 +55,13 @@ final class MovieQuizViewController: UIViewController, MovieQuizViewControllerPr
     
 
     func show(quiz step: QuizStepViewModel) {
+
+        UIView.animate(withDuration: 0.4) {
+            self.imageView.layer.borderWidth = 0
+        }
         counterLabel.text = step.questionNumber
         imageView.image = step.image
-        imageView.layer.borderWidth = 0
+        
         questionLabel.text = step.question
         
         yesButton.isEnabled = true
@@ -97,9 +101,11 @@ final class MovieQuizViewController: UIViewController, MovieQuizViewControllerPr
     }
     
     func highlightImageBorder(isCorrect: Bool) {
-        imageView.layer.masksToBounds = true
-        imageView.layer.borderWidth = 8
-        imageView.layer.borderColor = isCorrect ? UIColor.ypGreen.cgColor : UIColor.ypRed.cgColor
+        self.imageView.layer.masksToBounds = true
+        self.imageView.layer.borderColor = isCorrect ? UIColor.ypGreen.cgColor : UIColor.ypRed.cgColor
+        UIView.animate(withDuration: 0.4) {
+            self.imageView.layer.borderWidth = 8
+        }
     }
     
 
@@ -112,7 +118,9 @@ final class MovieQuizViewController: UIViewController, MovieQuizViewControllerPr
                 guard let self = self else { return }
                 
                 self.presenter.restartGame()
-                self.imageView.layer.borderWidth = 0
+                UIView.animate(withDuration: 0.4) {
+                    self.imageView.layer.borderWidth = 0
+                }
             }
         )
         alertPresenter?.show(with: alertModel)
