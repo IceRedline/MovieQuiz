@@ -65,12 +65,35 @@ final class MovieQuizViewController: UIViewController, MovieQuizViewControllerPr
     }
     
     
-    @IBAction private func yesButtonTapped() {
-        presenter.yesButtonTapped()
+    private func animateTouchDown(_ viewToAnimate: UIView) {
+        UIView.animate(withDuration: 0.2, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 0.2, options: .curveLinear) {
+            viewToAnimate.transform = CGAffineTransform(scaleX: 0.9, y: 0.9)
+        }
     }
     
-    @IBAction private func noButtonTapped() {
-        presenter.noButtonTapped()
+    private func animateTouchUp(_ viewToAnimate: UIView) {
+        UIView.animate(withDuration: 0.2, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 1, options: .curveLinear) {
+            viewToAnimate.transform = .identity
+        }
+    }
+    
+    @IBAction private func buttonTouchedDown(_ sender: UIButton) {
+        animateTouchDown(sender)
+    }
+    
+    @IBAction private func buttonTouchedUpInside(_ sender: UIButton) {
+        switch sender.tag {
+        case 0:
+            presenter.noButtonTapped()
+        case 1:
+            presenter.yesButtonTapped()
+        default: return
+        }
+        animateTouchUp(sender)
+    }
+    
+    @IBAction private func buttonTouchedUpOutside(_ sender: UIButton) {
+        animateTouchUp(sender)
     }
     
     func highlightImageBorder(isCorrect: Bool) {
@@ -94,4 +117,6 @@ final class MovieQuizViewController: UIViewController, MovieQuizViewControllerPr
         )
         alertPresenter?.show(with: alertModel)
     }
+    
 }
+

@@ -80,7 +80,9 @@
                                                     </userDefinedRuntimeAttribute>
                                                 </userDefinedRuntimeAttributes>
                                                 <connections>
-                                                    <action selector="noButtonTapped" destination="BYZ-38-t0r" eventType="touchUpInside" id="Q2a-O5-JFb"/>
+                                                    <action selector="buttonTouchedDown:" destination="BYZ-38-t0r" eventType="touchDown" id="sFn-PE-fen"/>
+                                                    <action selector="buttonTouchedUpInside:" destination="BYZ-38-t0r" eventType="touchUpInside" id="nWr-z4-Wtd"/>
+                                                    <action selector="buttonTouchedUpOutside:" destination="BYZ-38-t0r" eventType="touchDragOutside" id="62r-S4-nTa"/>
                                                 </connections>
                                             </button>
                                             <button opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4Gm-4j-PQ4">
@@ -98,7 +100,9 @@
                                                     </userDefinedRuntimeAttribute>
                                                 </userDefinedRuntimeAttributes>
                                                 <connections>
-                                                    <action selector="yesButtonTapped" destination="BYZ-38-t0r" eventType="touchUpInside" id="LYa-fa-UdR"/>
+                                                    <action selector="buttonTouchedDown:" destination="BYZ-38-t0r" eventType="touchDown" id="2b0-GE-64b"/>
+                                                    <action selector="buttonTouchedUpInside:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Oxh-bB-I8I"/>
+                                                    <action selector="buttonTouchedUpOutside:" destination="BYZ-38-t0r" eventType="touchDragOutside" id="iEQ-6V-XUC"/>
                                                 </connections>
                                             </button>
                                         </subviews>
