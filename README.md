@@ -2,6 +2,8 @@
 
 MovieQuiz is an application with quizzes about films from the top 250 ratings and the most popular films according to IMDb.
 
+![MovieQuiz Preview](https://github.com/user-attachments/assets/cf32fe0e-033e-47dd-ac01-fdbfb892972c)
+
 ## **Links**
 
 [API IMDb](https://imdb-api.com/api#Top250Movies-header)
